@@ -1,0 +1,113 @@
+
+
+
+
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.quiz-container {
+  width: 500px;
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.option {
+  background: #333;
+  padding: 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.option:hover {
+  background: #444;
+}
+
+.correct {
+    background: green !important;
+}
+
+.wrong {
+    background: red !important;
+}
+
+
+
+#progress {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+#skip-btn {
+  margin-top: 15px;
+  background: #555;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#skip-btn:hover {
+  background: #777;
+}
+
+.result-good {
+  background: #1e4620;
+}
+
+.result-average {
+  background: #4a3f0b;
+}
+
+.result-bad {
+  background: #4a1e1e;
+}
+
+
+/* ======   Share Results   ====== */
+.share-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.share-section button {
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: white;
+}
+
+.social-buttons a {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background: #eee;
+  border-radius: 6px;
+  text-decoration: none;
+  color: black;
+}
+
+
+
+
+
+

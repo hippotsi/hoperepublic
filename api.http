@@ -1,0 +1,78 @@
+### =========================
+### HopeRepublic Quiz API
+### =========================
+
+
+### Health check
+GET http://localhost:3000/
+
+
+### REST Client test
+GET http://localhost:3000/test
+
+
+### -------------------------
+### QUESTIONS API
+### -------------------------
+
+### Default questions (page 1, limit 10)
+GET http://localhost:3000/api/quizzes
+
+
+### Limit to 5 questions
+GET http://localhost:3000/api/quizzes?limit=5
+
+
+### Filter by category (general)
+GET http://localhost:3000/api/quizzes?category=general
+
+
+### Filter by difficulty (easy)
+GET http://localhost:3000/api/quizzes?difficulty=easy
+
+
+### Category + difficulty
+GET http://localhost:3000/api/quizzes?category=sports&difficulty=intermediate
+
+
+### Category + difficulty + limit (real quiz request)
+GET http://localhost:3000/api/quizzes?category=general&difficulty=easy&limit=10
+
+
+### -------------------------
+### PAGINATION
+### -------------------------
+
+### Page 1 (default limit 10)
+GET http://localhost:3000/api/quizzes?page=1
+
+
+### Page 2 (default limit 10)
+GET http://localhost:3000/api/quizzes?page=2
+
+
+### Page 1 with limit 5
+GET http://localhost:3000/api/quizzes?page=1&limit=5
+
+
+### Page 2 with limit 5
+GET http://localhost:3000/api/quizzes?page=2&limit=5
+
+
+### Difficulty + pagination
+GET http://localhost:3000/api/quizzes?difficulty=easy&page=2&limit=5
+
+
+
+
+
+# =======================   ### V1 Built Here  =======================
+###
+
+
+###
+GET http://localhost:3000/api/quizzes/general-knowledge
+
+
+###
+GET http://localhost:3000/api/quizzes/general-knowledge?limit=5
