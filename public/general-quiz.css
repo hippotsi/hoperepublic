@@ -1,0 +1,39 @@
+
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+:root{
+    --black: #000;
+    --white: #fff;
+    --red: #f00;
+    --cyan: #0ff;
+    --dwhite: #b8b4b4;
+    --lblk: #0b0b0b;
+    --cblk: #034949;
+
+
+    /* ===Fonts=== */
+}
+
+
+body{
+    background: rgb(200, 255, 200);
+    /* background-color: #fff; */
+}
+main{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
