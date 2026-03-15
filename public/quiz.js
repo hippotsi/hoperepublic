@@ -25,18 +25,56 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+
+
+
+
+
+
+
+
 // Fetch quiz
-async function loadQuiz() {
-  const response = await fetch(
-    `/api/quizzes/${quizId}?limit=20`
-  );
-  const data = await response.json();
+const loading = document.getElementById("loading");
+const quizList = document.getElementById("quizList");
 
-  quizTitle.textContent = data.title;
-  quizData = data.questions;
+async function loadQuizzes() {
+  try {
+    const res = await fetch("/api/quizzes");
 
-  showQuestion();
+    if (!res.ok) {
+      throw new Error("Server not ready");
+    }
+
+    const quizzes = await res.json();
+
+    loading.style.display = "none";
+
+    quizzes.forEach((quiz) => {
+      const card = document.createElement("div");
+      card.className = "quiz-card";
+
+      card.innerHTML = `
+        <h3>${quiz.title}</h3>
+        <p>${quiz.description}</p>
+        <a href="quiz.html?id=${quiz.id}">Start Quiz</a>
+      `;
+
+      quizList.appendChild(card);
+    });
+
+  } catch (err) {
+    console.log("Retrying...");
+    setTimeout(loadQuizzes, 3000);
+  }
 }
+
+loadQuizzes();
+
+
+
+
+
+
 
 
 
