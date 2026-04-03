@@ -14,10 +14,36 @@ let quizData = [];
 let currentQuestionIndex = 0;
 let score = 0;
 
-// const quizId = "general-knowledge";
 const urlParams = new URLSearchParams(window.location.search);
 const quizId = urlParams.get("id");
 
+
+// ✅ Load quiz from API
+async function loadQuiz() {
+  try {
+    if (!quizId) {
+      questionText.textContent = "No quiz selected.";
+      return;
+    }
+
+    const response = await fetch(`/api/quizzes/${quizId}?limit=20`);
+
+    if (!response.ok) {
+      throw new Error("Failed to load quiz");
+    }
+
+    const data = await response.json();
+
+    quizTitle.textContent = data.title;
+    quizData = data.questions;
+
+    showQuestion();
+
+  } catch (error) {
+    questionText.textContent = "Failed to load quiz. Please try again.";
+    console.log(error);
+  }
+}
 
 
 // Shuffle function
@@ -26,62 +52,7 @@ function shuffleArray(array) {
 }
 
 
-
-
-
-
-
-
-
-// Fetch quiz
-const loading = document.getElementById("loading");
-const quizList = document.getElementById("quizList");
-
-async function loadQuizzes() {
-  try {
-    const res = await fetch("/api/quizzes");
-
-    if (!res.ok) {
-      throw new Error("Server not ready");
-    }
-
-    const quizzes = await res.json();
-
-    loading.style.display = "none";
-
-    quizzes.forEach((quiz) => {
-      const card = document.createElement("div");
-      card.className = "quiz-card";
-
-      card.innerHTML = `
-        <h3>${quiz.title}</h3>
-        <p>${quiz.description}</p>
-        <a href="quiz.html?id=${quiz.id}">Start Quiz</a>
-      `;
-
-      quizList.appendChild(card);
-    });
-
-  } catch (err) {
-    console.log("Retrying...");
-    setTimeout(loadQuizzes, 3000);
-  }
-}
-
-loadQuizzes();
-
-
-
-
-
-
-
-
-
-
-
-// ====== Show Questions   =======
-
+// ====== Show Questions ======
 function showQuestion() {
   optionsContainer.innerHTML = "";
 
@@ -105,6 +76,8 @@ function showQuestion() {
   });
 }
 
+
+// ====== Answer Selection ======
 function selectAnswer(element, selectedOption, correctAnswer) {
   const allOptions = document.querySelectorAll(".option");
 
@@ -125,10 +98,14 @@ function selectAnswer(element, selectedOption, correctAnswer) {
   moveNext();
 }
 
+
+// Skip button
 skipBtn.addEventListener("click", () => {
-  moveNext(); // Skip counts as wrong automatically
+  moveNext();
 });
 
+
+// ====== Next Question ======
 function moveNext() {
   setTimeout(() => {
     currentQuestionIndex++;
@@ -142,11 +119,7 @@ function moveNext() {
 }
 
 
-
-
-
-
-// =======   Show Result   =======
+// ======= Show Result =======
 function showResult() {
   const percentage = Math.round((score / quizData.length) * 100);
 
@@ -178,58 +151,10 @@ function showResult() {
     <button onclick="goHome()">Back to Quizzes</button>
     <button onclick="shareResult(${percentage})">Share Result</button>
   `;
-
-  // ========   Share to Social Media Function   =======
-  
-
-  const shareText = `🔥 I scored ${percentage}% on the ${quiz.title} quiz! Can you beat me?`;
-
-  const shareURL = window.location.href;
-
-  // Native Share (mobile)
-  document.getElementById("shareBtn").onclick = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "Quiz Result",
-          text: shareText,
-          url: shareURL
-        });
-      } catch (err) {
-        console.log("Share cancelled");
-      }
-    } else {
-      alert("Sharing not supported on this browser.");
-    }
-  };
-
-  // Copy Link
-  document.getElementById("copyBtn").onclick = () => {
-    navigator.clipboard.writeText(shareURL);
-    alert("Link copied to clipboard!");
-  };
-
-  // Facebook
-  document.getElementById("facebookShare").href =
-    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareURL)}`;
-
-  // Twitter (X)
-  document.getElementById("twitterShare").href =
-    `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareURL)}`;
-
-  // WhatsApp
-  document.getElementById("whatsappShare").href =
-    `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareURL)}`;
-
-
-
 }
 
 
-
-
-
-// =======   Confetti Launch   =======
+// ======= Confetti =======
 function launchConfetti() {
   const duration = 2000;
   const end = Date.now() + duration;
@@ -247,10 +172,8 @@ function launchConfetti() {
   })();
 }
 
-loadQuiz();
 
-
-// =======   Share Reults   =======
+// ======= Actions =======
 function playAgain() {
   window.location.reload();
 }
@@ -261,7 +184,7 @@ function goHome() {
 
 function shareResult(percentage) {
   const text = `I scored ${percentage}% on HopeRepublic Quiz! 🎯🔥`;
-  
+
   if (navigator.share) {
     navigator.share({
       title: "HopeRepublic Quiz",
@@ -273,5 +196,12 @@ function shareResult(percentage) {
     alert("Result copied to clipboard!");
   }
 }
+
+
+// 🚀 Start
+loadQuiz();
+
+
+
 
 

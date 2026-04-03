@@ -8,46 +8,23 @@
 
   <main>
     <div class="quiz-container">
-      <h1>Choose a Quiz - Let's see how good you're</h1>
-      <div id="quiz-list"></div>
-      <div id="loadingMessage">Loading quizzes...</div>
+      <h1>Choose a Quiz <span class="smaller">Let's see how good you are -></span></h1>
+      
+      <div id="loading">Loading quizzes...</div>
+      <div id="quizList"></div>
+
     </div>
 
     <div class="articles">
-      <div class="comic">
-        
-      </div>
+      <div class="comic"></div>
     </div>
-
   </main>
+
   
-
-  <script>
-    async function loadQuizzes() {
-      try {
-        const response = await fetch("/api/quizzes");
-
-        if (!response.ok) {
-          throw new Error("Server waking up...");
-        }
-
-        const quizzes = await response.json();
-        displayQuizzes(quizzes);
-
-      } catch (error) {
-        console.log("Retrying in 3 seconds...");
-        setTimeout(loadQuizzes, 3000);
-      }
-    }
-
-    loadQuizzes();
-  </script>
+  <script src="index.js"></script>
 
 
 
-
-
-
-
+  
 </body>
 </html>
